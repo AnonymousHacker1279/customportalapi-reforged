@@ -1,6 +1,7 @@
 package net.kyrptonaught.customportalapi.portal.linking;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceKey;
@@ -20,11 +21,11 @@ public class PortalLinkingStorage extends SavedData {
     }
 
     public static SavedData.Factory<PortalLinkingStorage> factory() {
-        return new SavedData.Factory<PortalLinkingStorage>(PortalLinkingStorage::new, PortalLinkingStorage::fromNbt,
-                DataFixTypes.SAVED_DATA_MAP_DATA);
+        return new SavedData.Factory<>(PortalLinkingStorage::new, PortalLinkingStorage::fromNbt,
+		        DataFixTypes.SAVED_DATA_MAP_DATA);
     }
 
-    public static PortalLinkingStorage fromNbt(CompoundTag tag) {
+    public static PortalLinkingStorage fromNbt(CompoundTag tag, HolderLookup.Provider provider) {
         PortalLinkingStorage cman = new PortalLinkingStorage();
         ListTag links = (ListTag) tag.get("portalLinks");
 
@@ -38,7 +39,7 @@ public class PortalLinkingStorage extends SavedData {
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public CompoundTag save(CompoundTag tag, HolderLookup.Provider provider) {
         ListTag links = new ListTag();
         portalLinks.keys().asIterator().forEachRemaining(dimKey -> {
             portalLinks.get(dimKey).forEach((blockPos, dimensionalBlockPos) -> {

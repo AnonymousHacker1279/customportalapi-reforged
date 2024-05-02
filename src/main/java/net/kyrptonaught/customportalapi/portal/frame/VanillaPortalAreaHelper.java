@@ -129,8 +129,8 @@ public class VanillaPortalAreaHelper extends PortalFrameTester {
     @Override
     public Vec3 getEntityOffsetInPortal(BlockUtil.FoundRectangle arg, Entity entity, Direction.Axis portalAxis) {
         EntityDimensions entityDimensions = entity.getDimensions(entity.getPose());
-        double width = arg.axis1Size - entityDimensions.width;
-        double height = arg.axis2Size - entityDimensions.height;
+        double width = arg.axis1Size - entityDimensions.width();
+        double height = arg.axis2Size - entityDimensions.height();
 
         double deltaX = Mth.inverseLerp(entity.getX(), arg.minCorner.getX(), arg.minCorner.getX() + width);
         double deltaY = Mth.inverseLerp(entity.getY(), arg.minCorner.getY(), arg.minCorner.getY() + height);
@@ -143,8 +143,8 @@ public class VanillaPortalAreaHelper extends PortalFrameTester {
     @Override
     public PortalInfo getTPTargetInPortal(BlockUtil.FoundRectangle portalRect, Direction.Axis portalAxis, Vec3 prevOffset, Entity entity) {
         EntityDimensions entityDimensions = entity.getDimensions(entity.getPose());
-        double width = portalRect.axis1Size - entityDimensions.width;
-        double height = portalRect.axis2Size - entityDimensions.height;
+        double width = portalRect.axis1Size - entityDimensions.width();
+        double height = portalRect.axis2Size - entityDimensions.height();
         double x = Mth.lerp(prevOffset.x, portalRect.minCorner.getX(), portalRect.minCorner.getX() + width);
         double y = Mth.lerp(prevOffset.y, portalRect.minCorner.getY(), portalRect.minCorner.getY() + height);
         double z = Mth.lerp(prevOffset.z, portalRect.minCorner.getZ(), portalRect.minCorner.getZ() + width);

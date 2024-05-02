@@ -1,6 +1,5 @@
 package net.kyrptonaught.customportalapi;
 
-import net.kyrptonaught.customportalapi.init.ParticleInit;
 import net.kyrptonaught.customportalapi.interfaces.EntityInCustomPortal;
 import net.kyrptonaught.customportalapi.portal.frame.PortalFrameTester;
 import net.kyrptonaught.customportalapi.util.CustomPortalHelper;
@@ -8,13 +7,12 @@ import net.kyrptonaught.customportalapi.util.CustomTeleporter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -89,7 +87,7 @@ public class CustomPortalBlock extends Block {
                 f = (double) pos.getZ() + 0.5D + 0.25D * (double) k;
                 j = random.nextFloat() * 2.0F * (float) k;
             }
-            world.addParticle(new BlockParticleOption(ParticleInit.CUSTOMPORTALPARTICLE.get(),
+            world.addParticle(new BlockParticleOption(ParticleTypes.BLOCK,
                     getPortalBase(world, pos).defaultBlockState()), d, e, f, g, h, j);
         }
     }
