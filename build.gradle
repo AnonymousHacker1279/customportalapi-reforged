@@ -157,7 +157,7 @@ if (file('key.properties').exists()) {
         def mainFile = upload("902717", jar)
         mainFile.releaseType = "release"
         mainFile.changelogType = "text"
-        mainFile.changelog = file("changelog.txt")
+        mainFile.changelog = file("changelog.md")
         mainFile.addModLoader("NeoForge")
         mainFile.addJavaVersion("Java 17")
         mainFile.addGameVersion("1.20.1")
@@ -173,8 +173,8 @@ if (file('key.properties').exists()) {
 		projectId = 'VepYPOdy'
 		versionNumber = project.mod_version
 		uploadFile = jar
-		changelog = rootProject.file("changelog.txt").text
 		gameVersions = ['1.20.1']
+		changelog = rootProject.file("changelog.md").text
 		loaders = ['neoforge']
 	}
 }
