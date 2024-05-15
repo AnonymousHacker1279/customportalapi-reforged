@@ -1,3 +1,3 @@
-v1.0.6
+v1.0.3
 
-- Backported
+- Backported Fixes custom particles/sounds not working. Thanks AnonymousHacker1279!
