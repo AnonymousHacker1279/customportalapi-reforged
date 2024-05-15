@@ -4,8 +4,7 @@ plugins {
     id 'maven-publish'
     id 'net.neoforged.gradle' version '[6.0.18,6.2)'
     id 'org.spongepowered.mixin' version '0.7.+'
-    id "com.modrinth.minotaur" version "2.+"
-    id 'net.darkhax.curseforgegradle' version '1.+'
+    id 'me.modmuss50.mod-publish-plugin' version '0.4.0'
 }
 
 import groovy.json.JsonOutput
@@ -148,33 +147,25 @@ processResources {
 }
 
 if (file('key.properties').exists()) {
-    task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
-        def curseProp = new Properties()
+    publishMods {
+        def releaseProp = new Properties()
         File secretPropsFile = file("key.properties")
-        curseProp.load(secretPropsFile.newInputStream())
-        apiToken = curseProp.getProperty("curseKey")
+        releaseProp.load(secretPropsFile.newInputStream())
+        file = jar.archiveFile
+        changelog = rootProject.file("changelog.md").text
+        type = STABLE
+        modLoaders.add("neoforge")
 
-        def mainFile = upload("902717", jar)
-        mainFile.releaseType = "release"
-        mainFile.changelogType = "text"
-        mainFile.changelog = file("changelog.md")
-        mainFile.addModLoader("NeoForge")
-        mainFile.addJavaVersion("Java 17")
-        mainFile.addGameVersion(project.minecraft_version)
+        curseforge {
+            projectId = "902717"
+            projectSlug = "custom-portal-api-reforged"
+            accessToken = releaseProp.getProperty("curseKey")
+            minecraftVersions.add(project.minecraft_version)
+        }
+        modrinth {
+            projectId = "VepYPOdy"
+            accessToken = releaseProp.getProperty('modrinthKey')
+            minecraftVersions.add(project.minecraft_version)
+        }
     }
-}
-
-if (file('key.properties').exists()) {
-	modrinth {
-		def modrinthProp = new Properties()
-		File secretPropsFile = file("key.properties")
-		modrinthProp.load(secretPropsFile.newInputStream())
-		token = modrinthProp.getProperty('modrinthKey')
-		projectId = 'VepYPOdy'
-		versionNumber = project.mod_version
-		uploadFile = jar
-		changelog = rootProject.file("changelog.md").text
-		gameVersions = [project.minecraft_version]
-		loaders = ['neoforge']
-	}
 }
