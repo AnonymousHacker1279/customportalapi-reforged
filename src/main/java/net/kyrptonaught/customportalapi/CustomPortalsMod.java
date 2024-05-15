@@ -1,6 +1,6 @@
 package net.kyrptonaught.customportalapi;
 
-import net.kyrptonaught.customportalapi.init.ParticleInit;
+import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
 import net.kyrptonaught.customportalapi.portal.PortalIgnitionSource;
 import net.kyrptonaught.customportalapi.portal.PortalPlacer;
 import net.kyrptonaught.customportalapi.portal.frame.FlatPortalAreaHelper;
@@ -10,13 +10,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -30,7 +29,7 @@ import java.util.function.Supplier;
 import static net.kyrptonaught.customportalapi.CustomPortalsMod.MOD_ID;
 
 @Mod(MOD_ID)
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class CustomPortalsMod {
     public static final String MOD_ID = "cpapireforged";
 
@@ -47,7 +46,6 @@ public class CustomPortalsMod {
 
     public CustomPortalsMod(IEventBus bus) {
         BLOCKS.register(bus);
-        ParticleInit.PARTICLES.register(bus);
         onInitialize(bus);
     }
 
