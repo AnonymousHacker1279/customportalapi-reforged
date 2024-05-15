@@ -160,7 +160,7 @@ if (file('key.properties').exists()) {
         mainFile.changelog = file("changelog.md")
         mainFile.addModLoader("NeoForge")
         mainFile.addJavaVersion("Java 17")
-        mainFile.addGameVersion("1.20.1")
+        mainFile.addGameVersion(project.minecraft_version)
     }
 }
 
@@ -173,8 +173,8 @@ if (file('key.properties').exists()) {
 		projectId = 'VepYPOdy'
 		versionNumber = project.mod_version
 		uploadFile = jar
-		gameVersions = ['1.20.1']
 		changelog = rootProject.file("changelog.md").text
+		gameVersions = [project.minecraft_version]
 		loaders = ['neoforge']
 	}
 }
