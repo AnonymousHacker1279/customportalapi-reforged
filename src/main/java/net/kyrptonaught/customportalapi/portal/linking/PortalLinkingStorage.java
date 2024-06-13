@@ -32,7 +32,7 @@ public class PortalLinkingStorage extends SavedData {
         for (int i = 0; i < links.size(); i++) {
             CompoundTag link = links.getCompound(i);
             DimensionalBlockPos toTag = DimensionalBlockPos.fromTag(link.getCompound("to"));
-            cman.addLink(BlockPos.of(link.getLong("fromPos")), new ResourceLocation(link.getString("fromDimID")),
+            cman.addLink(BlockPos.of(link.getLong("fromPos")), ResourceLocation.withDefaultNamespace(link.getString("fromDimID")),
                     toTag.pos, toTag.dimensionType);
         }
         return cman;

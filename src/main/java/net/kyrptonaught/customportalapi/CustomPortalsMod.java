@@ -40,8 +40,8 @@ public class CustomPortalsMod {
                     Block.Properties.ofFullCopy(Blocks.NETHER_PORTAL).noCollission().strength(-1).sound(
                             SoundType.GLASS).lightLevel(state -> 11)));
     public static HashMap<ResourceLocation, ResourceKey<Level>> dims = new HashMap<>();
-    public static ResourceLocation VANILLAPORTAL_FRAMETESTER = new ResourceLocation(MOD_ID, "vanillanether");
-    public static ResourceLocation FLATPORTAL_FRAMETESTER = new ResourceLocation(MOD_ID, "flat");
+    public static ResourceLocation VANILLAPORTAL_FRAMETESTER = ResourceLocation.fromNamespaceAndPath(MOD_ID, "vanillanether");
+    public static ResourceLocation FLATPORTAL_FRAMETESTER = ResourceLocation.fromNamespaceAndPath(MOD_ID, "flat");
     public static PortalLinkingStorage portalLinkingStorage;
 
     public CustomPortalsMod(IEventBus bus) {

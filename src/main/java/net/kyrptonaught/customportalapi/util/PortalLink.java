@@ -17,7 +17,7 @@ public class PortalLink {
     public ResourceLocation block;
     public PortalIgnitionSource portalIgnitionSource = PortalIgnitionSource.FIRE;
     public ResourceLocation dimID;
-    public ResourceLocation returnDimID = new ResourceLocation("overworld");
+    public ResourceLocation returnDimID = ResourceLocation.withDefaultNamespace("overworld");
     public boolean onlyIgnitableInReturnDim = false;
     public int colorID;
     public int forcedWidth, forcedHeight;

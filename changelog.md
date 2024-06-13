@@ -1,4 +1,3 @@
-v1.0.7
+v1.0.8
 
-- NeoForge 1.20.6, thanks to AnonymousHacker1279.
-- Fixes custom particles/sounds not working. Thanks AnonymousHacker1279!
+- Ported to NeoForge 1.21 
