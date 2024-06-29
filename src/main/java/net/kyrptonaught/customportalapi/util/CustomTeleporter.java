@@ -55,6 +55,10 @@ public class CustomTeleporter {
         Direction.Axis portalAxis = CustomPortalHelper.getAxisFrom(entity.level().getBlockState(enteredPortalPos));
         BlockUtil.FoundRectangle fromPortalRectangle = portalFrameTesterFactory.createInstanceOfPortalFrameTester().init(
                 entity.level(), enteredPortalPos, portalAxis, frameBlock).getRectangle();
+
+        if (fromPortalRectangle.minCorner == null)
+            return null;
+
         DimensionalBlockPos destinationPos = CustomPortalsMod.portalLinkingStorage.getDestination(
                 fromPortalRectangle.minCorner, entity.level().dimension());
 

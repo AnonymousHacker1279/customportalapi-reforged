@@ -1,6 +1,7 @@
 package net.kyrptonaught.customportalapi.api;
 
 import net.kyrptonaught.customportalapi.*;
+import net.kyrptonaught.customportalapi.event.CPASoundEventData;
 import net.kyrptonaught.customportalapi.portal.PortalIgnitionSource;
 import net.kyrptonaught.customportalapi.util.*;
 import net.minecraft.core.registries.BuiltInRegistries;

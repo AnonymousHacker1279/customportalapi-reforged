@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -18,13 +19,24 @@ public class PortalIgnitionSource {
     public final static PortalIgnitionSource FIRE = new PortalIgnitionSource(SourceType.BLOCKPLACED,
             BuiltInRegistries.BLOCK.getKey(Blocks.FIRE));
     public final static PortalIgnitionSource WATER = FluidSource(Fluids.WATER);
+
+    public enum SourceType {
+        USEITEM, BLOCKPLACED, FLUID, CUSTOM
+    }
+
     private static final HashSet<Item> USEITEMS = new HashSet<>();
     public SourceType sourceType;
     public ResourceLocation ignitionSourceID;
+    public Player player;
 
     private PortalIgnitionSource(SourceType sourceType, ResourceLocation ignitionSourceID) {
         this.sourceType = sourceType;
         this.ignitionSourceID = ignitionSourceID;
+    }
+
+    public PortalIgnitionSource withPlayer(Player player) {
+        this.player = player;
+        return this;
     }
 
     public static PortalIgnitionSource ItemUseSource(Item item) {
@@ -58,9 +70,5 @@ public class PortalIgnitionSource {
     public boolean isLava() {
         return Optional.ofNullable(BuiltInRegistries.FLUID.get(ignitionSourceID)).filter(
                 a -> a.is(FluidTags.LAVA)).isPresent();
-    }
-
-    public enum SourceType {
-        USEITEM, BLOCKPLACED, FLUID, CUSTOM
     }
 }

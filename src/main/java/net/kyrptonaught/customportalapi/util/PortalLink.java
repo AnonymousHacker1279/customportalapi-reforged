@@ -1,6 +1,8 @@
 package net.kyrptonaught.customportalapi.util;
 
 import net.kyrptonaught.customportalapi.*;
+import net.kyrptonaught.customportalapi.event.CPAEvent;
+import net.kyrptonaught.customportalapi.event.CPASoundEventData;
 import net.kyrptonaught.customportalapi.portal.PortalIgnitionSource;
 import net.kyrptonaught.customportalapi.portal.frame.PortalFrameTester;
 import net.minecraft.resources.ResourceLocation;
@@ -11,19 +13,20 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class PortalLink {
-    private final CPAEvent<Entity, SHOULDTP> beforeTPEvent = new CPAEvent<>(SHOULDTP.CONTINUE_TP);
-    private final CPAEvent<Player, CPASoundEventData> inPortalAmbienceEvent = new CPAEvent<>();
-    private final CPAEvent<Player, CPASoundEventData> postTpPortalAmbienceEvent = new CPAEvent<>();
     public ResourceLocation block;
     public PortalIgnitionSource portalIgnitionSource = PortalIgnitionSource.FIRE;
+    private Supplier<CustomPortalBlock> portalBlock = CustomPortalsMod.portalBlock;
     public ResourceLocation dimID;
     public ResourceLocation returnDimID = ResourceLocation.withDefaultNamespace("overworld");
     public boolean onlyIgnitableInReturnDim = false;
     public int colorID;
     public int forcedWidth, forcedHeight;
     public ResourceLocation portalFrameTester = CustomPortalsMod.VANILLAPORTAL_FRAMETESTER;
-    private Supplier<CustomPortalBlock> portalBlock = CustomPortalsMod.portalBlock;
+
     private Consumer<Entity> postTPEvent;
+    private final CPAEvent<Entity, SHOULDTP> beforeTPEvent = new CPAEvent<>(SHOULDTP.CONTINUE_TP);
+    private final CPAEvent<Player, CPASoundEventData> inPortalAmbienceEvent = new CPAEvent<>();
+    private final CPAEvent<Player, CPASoundEventData> postTpPortalAmbienceEvent = new CPAEvent<>();
 
     public PortalLink() {
 
