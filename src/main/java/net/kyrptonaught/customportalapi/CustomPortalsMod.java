@@ -4,9 +4,7 @@ import static net.kyrptonaught.customportalapi.CustomPortalsMod.MOD_ID;
 
 import java.util.HashMap;
 
-import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
 import net.kyrptonaught.customportalapi.init.ParticleInit;
-import net.kyrptonaught.customportalapi.networking.NetworkManager;
 import net.kyrptonaught.customportalapi.portal.PortalIgnitionSource;
 import net.kyrptonaught.customportalapi.portal.PortalPlacer;
 import net.kyrptonaught.customportalapi.portal.frame.FlatPortalAreaHelper;
@@ -97,7 +95,6 @@ public class CustomPortalsMod {
 
 	@SubscribeEvent
 	public static void onCommonStartUp(FMLCommonSetupEvent event) {
-		NetworkManager.register();
 //		CustomPortalBuilder.beginPortal().frameBlock(Blocks.GLOWSTONE).destDimID(new ResourceLocation("the_nether")).lightWithWater().tintColor(46, 5, 25).registerPortal();
 	}
 }
