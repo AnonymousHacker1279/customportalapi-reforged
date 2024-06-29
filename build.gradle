@@ -131,13 +131,13 @@ if (file('key.properties').exists()) {
         modLoaders.add("neoforge")
 
         curseforge {
-            projectId = "902717"
-            projectSlug = "custom-portal-api-reforged"
+            projectId = project.curseforgeID
+            projectSlug = project.projectSlug
             accessToken = releaseProp.getProperty("curseKey")
             minecraftVersions.add(project.minecraft_version)
         }
         modrinth {
-            projectId = "VepYPOdy"
+            projectId = project.modrinthID
             accessToken = releaseProp.getProperty('modrinthKey')
             minecraftVersions.add(project.minecraft_version)
         }
