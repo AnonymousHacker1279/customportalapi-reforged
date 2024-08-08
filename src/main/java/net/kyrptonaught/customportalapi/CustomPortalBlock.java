@@ -1,6 +1,5 @@
 package net.kyrptonaught.customportalapi;
 
-import net.kyrptonaught.customportalapi.interfaces.EntityInCustomPortal;
 import net.kyrptonaught.customportalapi.portal.frame.PortalFrameTester;
 import net.kyrptonaught.customportalapi.util.CustomPortalHelper;
 import net.kyrptonaught.customportalapi.util.CustomTeleporter;
@@ -8,24 +7,29 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Portal;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 
-public class CustomPortalBlock extends Block {
+public class CustomPortalBlock extends Block implements Portal {
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
     protected static final VoxelShape X_SHAPE = Block.box(0.0D, 0.0D, 6.0D, 16.0D, 16.0D, 10.0D);
     protected static final VoxelShape Z_SHAPE = Block.box(6.0D, 0.0D, 0.0D, 10.0D, 16.0D, 16.0D);
@@ -97,15 +101,31 @@ public class CustomPortalBlock extends Block {
 
     @Override
     public void entityInside(@NotNull BlockState state, @NotNull Level world, BlockPos pos, @NotNull Entity entity) {
-        var entityInPortal = (EntityInCustomPortal) entity;
-        entityInPortal.tickInPortal(pos.immutable());
-        if (!entityInPortal.didTeleport() && entityInPortal.getTimeInPortal() >= entity.getPortalWaitTime()) {
-            entityInPortal.setDidTP(true);
-            if (!world.isClientSide()) CustomTeleporter.TPToDim(world, entity, getPortalBase(world, pos), pos);
+        if (entity.canUsePortal(false)) {
+            entity.setAsInsidePortal(this, pos);
+        }
+    }
+
+    @Override
+    public int getPortalTransitionTime(ServerLevel world, Entity entity) {
+        if (entity instanceof Player playerEntity) {
+            return Math.max(1, world.getGameRules().getInt(playerEntity.getAbilities().invulnerable ? GameRules.RULE_PLAYERS_NETHER_PORTAL_CREATIVE_DELAY : GameRules.RULE_PLAYERS_NETHER_PORTAL_DEFAULT_DELAY));
+        } else {
+            return 0;
         }
     }
 
     public Block getPortalBase(Level world, BlockPos pos) {
         return CustomPortalHelper.getPortalBaseDefault(world, pos);
+    }
+
+    @Override
+    public @Nullable DimensionTransition getPortalDestination(ServerLevel world, Entity entity, BlockPos pos) {
+        return CustomTeleporter.createTeleportTarget(world, entity, getPortalBase(world, pos), pos);
+    }
+
+    @Override
+    public Transition getLocalTransition() {
+        return Transition.CONFUSION;
     }
 }

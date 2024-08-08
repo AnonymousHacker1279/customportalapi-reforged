@@ -8,6 +8,7 @@ import net.kyrptonaught.customportalapi.util.PortalLink;
 import net.minecraft.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
@@ -16,7 +17,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.portal.PortalInfo;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
@@ -141,7 +142,7 @@ public class VanillaPortalAreaHelper extends PortalFrameTester {
     }
 
     @Override
-    public PortalInfo getTPTargetInPortal(BlockUtil.FoundRectangle portalRect, Direction.Axis portalAxis, Vec3 prevOffset, Entity entity) {
+    public DimensionTransition getTPTargetInPortal(ServerLevel world, BlockUtil.FoundRectangle portalRect, Direction.Axis portalAxis, Vec3 prevOffset, Entity entity) {
         EntityDimensions entityDimensions = entity.getDimensions(entity.getPose());
         double width = portalRect.axis1Size - entityDimensions.width();
         double height = portalRect.axis2Size - entityDimensions.height();
@@ -153,7 +154,8 @@ public class VanillaPortalAreaHelper extends PortalFrameTester {
         else if (portalAxis == Direction.Axis.Z)
             x = portalRect.minCorner.getX() + .5D;
 
-        return new PortalInfo(new Vec3(x, y, z), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot());
+        DimensionTransition.PostDimensionTransition post = DimensionTransition.PLAY_PORTAL_SOUND.then(entityx -> entityx.placePortalTicket(portalRect.minCorner));
+        return new DimensionTransition(world, new Vec3(x, y, z), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot(), post);
     }
 
     public void lightPortal(Block frameBlock) {
