@@ -54,7 +54,9 @@ public class CustomTeleporter {
                 if (!portalFrameTester.isAlreadyLitPortalFrame()) {
                     portalFrameTester.lightPortal(frameBlock);
                 }
-                return portalFrameTester.getTPTargetInPortal(destinationWorld, portalFrameTester.getRectangle(), portalAxis, portalFrameTester.getEntityOffsetInPortal(fromPortalRectangle, entity, portalAxis), entity);
+
+                PortalLink link = CustomPortalApiRegistry.getPortalLinkFromBase(frameBlock);
+                return portalFrameTester.getTPTargetInPortal(destinationWorld, portalFrameTester.getRectangle(), portalAxis, portalFrameTester.getEntityOffsetInPortal(fromPortalRectangle, entity, portalAxis), entity, link);
             }
         }
         return createDestinationPortal(destinationWorld, entity, portalAxis, fromPortalRectangle, frameBlock.defaultBlockState());
@@ -70,10 +72,11 @@ public class CustomTeleporter {
         BlockPos blockPos3 = BlockPos.containing(Mth.clamp(entity.getX() * scaleFactor, xMin, xMax), entity.getY(), Mth.clamp(entity.getZ() * scaleFactor, zMin, zMax));
         Optional<BlockUtil.FoundRectangle> portal = PortalPlacer.createDestinationPortal(destination, blockPos3, frameBlock, axis);
         if (portal.isPresent()) {
-            PortalFrameTester portalFrameTester = CustomPortalApiRegistry.getPortalLinkFromBase(frameBlock.getBlock()).getFrameTester().createInstanceOfPortalFrameTester();
+            PortalLink link = CustomPortalApiRegistry.getPortalLinkFromBase(frameBlock.getBlock());
+            PortalFrameTester portalFrameTester = link.getFrameTester().createInstanceOfPortalFrameTester();
 
             CustomPortalsMod.portalLinkingStorage.createLink(portalFramePos.minCorner, entity.level().dimension(), portal.get().minCorner, destination.dimension());
-            return portalFrameTester.getTPTargetInPortal(destination, portal.get(), axis, portalFrameTester.getEntityOffsetInPortal(portalFramePos, entity, axis), entity);
+            return portalFrameTester.getTPTargetInPortal(destination, portal.get(), axis, portalFrameTester.getEntityOffsetInPortal(portalFramePos, entity, axis), entity, link);
         }
         return idkWhereToPutYou(destination, entity, blockPos3);
     }
