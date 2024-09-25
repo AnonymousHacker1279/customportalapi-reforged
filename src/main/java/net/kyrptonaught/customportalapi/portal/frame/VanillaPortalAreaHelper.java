@@ -6,8 +6,10 @@ import net.kyrptonaught.customportalapi.CustomPortalsMod;
 import net.kyrptonaught.customportalapi.util.CustomPortalHelper;
 import net.kyrptonaught.customportalapi.util.PortalLink;
 import net.minecraft.BlockUtil;
+import net.minecraft.BlockUtil.FoundRectangle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -142,7 +144,7 @@ public class VanillaPortalAreaHelper extends PortalFrameTester {
     }
 
     @Override
-    public DimensionTransition getTPTargetInPortal(ServerLevel world, BlockUtil.FoundRectangle portalRect, Direction.Axis portalAxis, Vec3 prevOffset, Entity entity) {
+    public DimensionTransition getTPTargetInPortal(ServerLevel world, FoundRectangle portalRect, Axis portalAxis, Vec3 prevOffset, Entity entity, PortalLink link) {
         EntityDimensions entityDimensions = entity.getDimensions(entity.getPose());
         double width = portalRect.axis1Size - entityDimensions.width();
         double height = portalRect.axis2Size - entityDimensions.height();
@@ -154,7 +156,10 @@ public class VanillaPortalAreaHelper extends PortalFrameTester {
         else if (portalAxis == Direction.Axis.Z)
             x = portalRect.minCorner.getX() + .5D;
 
-        DimensionTransition.PostDimensionTransition post = DimensionTransition.PLAY_PORTAL_SOUND.then(entityx -> entityx.placePortalTicket(portalRect.minCorner));
+        DimensionTransition.PostDimensionTransition post = DimensionTransition.PLAY_PORTAL_SOUND.then(entityx -> {
+            entityx.placePortalTicket(portalRect.minCorner);
+            link.executePostTPEvent(entityx);
+        });
         return new DimensionTransition(world, new Vec3(x, y, z), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot(), post);
     }
 

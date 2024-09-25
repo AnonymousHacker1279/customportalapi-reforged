@@ -5,6 +5,7 @@ import net.kyrptonaught.customportalapi.portal.PortalIgnitionSource;
 import net.kyrptonaught.customportalapi.util.CustomPortalHelper;
 import net.kyrptonaught.customportalapi.util.PortalLink;
 import net.minecraft.BlockUtil;
+import net.minecraft.BlockUtil.FoundRectangle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -80,7 +81,7 @@ public abstract class PortalFrameTester {
 
     public abstract Vec3 getEntityOffsetInPortal(BlockUtil.FoundRectangle arg, Entity entity, Direction.Axis portalAxis);
 
-    public abstract DimensionTransition getTPTargetInPortal(ServerLevel world, BlockUtil.FoundRectangle portalRect, Direction.Axis portalAxis, Vec3 prevOffset, Entity entity);
+    public abstract DimensionTransition getTPTargetInPortal(ServerLevel world, FoundRectangle portalRect, Axis portalAxis, Vec3 prevOffset, Entity entity, PortalLink link);
 
     protected BlockPos getLowerCorner(BlockPos blockPos, Direction.Axis axis1, Direction.Axis axis2) {
         if (!validStateInsidePortal(world.getBlockState(blockPos), VALID_FRAME))
