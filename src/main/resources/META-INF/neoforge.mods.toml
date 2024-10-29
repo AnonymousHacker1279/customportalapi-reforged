@@ -3,7 +3,7 @@ loaderVersion="${loader_version_range}"
 license="${mod_license}"
 [[mods]] 
 modId="${mod_id}" 
-version="${mod_version}" 
+version="${version}"
 displayName="${mod_name}" 
 #logoFile="examplemod.png" 
 authors="${mod_authors}" 
