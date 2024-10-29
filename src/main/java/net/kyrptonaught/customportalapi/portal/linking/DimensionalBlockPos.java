@@ -14,7 +14,7 @@ public class DimensionalBlockPos {
     }
 
     public static DimensionalBlockPos fromTag(CompoundTag tag) {
-        return new DimensionalBlockPos(ResourceLocation.withDefaultNamespace(tag.getString("dimID")), BlockPos.of(tag.getLong("pos")));
+        return new DimensionalBlockPos(ResourceLocation.parse(tag.getString("dimID")), BlockPos.of(tag.getLong("pos")));
     }
 
     public CompoundTag toTag(CompoundTag tag) {
