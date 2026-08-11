@@ -32,7 +32,8 @@ import tech.anonymoushacker1279.openportals.portal.teleport.PortalTeleporter;
 import tech.anonymoushacker1279.openportals.util.PortalConstants;
 import tech.anonymoushacker1279.openportals.util.PortalUtils;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 public class CustomPortalBlock extends Block implements Portal {
 
@@ -41,9 +42,10 @@ public class CustomPortalBlock extends Block implements Portal {
 	protected static final VoxelShape Z_SHAPE = Block.box(6.0D, 0.0D, 0.0D, 10.0D, 16.0D, 16.0D);
 	protected static final VoxelShape Y_SHAPE = Block.box(0.0D, 6.0D, 0.0D, 16.0D, 10.0D, 16.0D);
 	private static final Cache<BlockPos, PortalInfo> PORTAL_CACHE = CacheBuilder.newBuilder()
-			.expireAfterWrite(10, TimeUnit.SECONDS)
-			.maximumSize(1000)
+			.expireAfterWrite(Duration.of(10, ChronoUnit.MINUTES))
+			.maximumSize(250)
 			.build();
+
 	public CustomPortalBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(AXIS, Direction.Axis.X));
