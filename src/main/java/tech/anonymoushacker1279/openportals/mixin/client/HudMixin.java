@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.openportals.mixin.client;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.block.BlockStateModelSet;
 import net.minecraft.client.resources.model.sprite.Material;
@@ -21,8 +21,8 @@ import tech.anonymoushacker1279.openportals.OpenPortals;
 import tech.anonymoushacker1279.openportals.portal.CustomPortalBlock;
 import tech.anonymoushacker1279.openportals.portal.PortalLink;
 
-@Mixin(Gui.class)
-public class InGameHudMixin {
+@Mixin(Hud.class)
+public class HudMixin {
 
 	@Shadow
 	@Final

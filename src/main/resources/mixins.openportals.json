@@ -4,12 +4,12 @@
 	"package": "tech.anonymoushacker1279.openportals.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"portal_lighters.AbstractFireMixin",
-		"portal_lighters.FluidBlockPlacedMixin",
-		"portal_lighters.PotionEntityMixin"
+		"portal_lighters.AbstractThrownPotionMixin",
+		"portal_lighters.BaseFireBlockMixin",
+		"portal_lighters.LiquidBlockMixin"
 	],
 	"client": [
-		"client.InGameHudMixin",
+		"client.HudMixin",
 		"client.LocalPlayerMixin"
 	],
 	"injectors": {

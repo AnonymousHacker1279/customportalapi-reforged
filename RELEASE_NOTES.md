@@ -1,1 +1,1 @@
-This release updates to MC 26.1.2. The API surface is unchanged.
+This release updates to MC 26.2. The API surface is unchanged.

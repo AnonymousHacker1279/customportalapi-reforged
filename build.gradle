@@ -1,8 +1,8 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.141'
-    id "com.hypherionmc.modutils.modpublisher" version "2.1.8"
+    id 'net.neoforged.moddev' version '2.0.143'
+    id "com.hypherionmc.modutils.modpublisher" version "2.2.2"
     id 'idea'
 }
 
